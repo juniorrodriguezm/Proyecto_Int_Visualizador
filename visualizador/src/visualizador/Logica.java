@@ -11,7 +11,8 @@ import processing.core.PImage;
 public class Logica {
 
 	PApplet app;
-	int correr = 0, numImagenes = 4, posY = 87, var = 0;
+	int correr = 0, numImagenes = 4, rsize = 0, x = 0, y = 0, rota = 0, posY = 87, var = 0;
+	boolean zoom = true, rotacion = false, full = false;
 	private PImage mas, menos, rotar, interfaz;
 	private String[] tipos = { ".png", ".jpg", ".gif" };
 	private PImage[] imagenes = new PImage[20];
@@ -65,7 +66,7 @@ public class Logica {
 
 		// carga la imagen principal
 
-		imagenesViz[correr].resize(547, 363);
+		imagenesViz[correr].resize(547 + rsize, 363 + rsize);
 
 		// carga la lista
 
@@ -73,6 +74,62 @@ public class Logica {
 			imagenes[i].resize(141, 100);
 			app.image(imagenes[i], 134, 120 * i + posY);
 
+		}
+
+		// rotacion imagen
+		if (correr != correr) {
+			rotacion = false;
+			rota = 0;
+		}
+
+		if (rotacion == false) {
+			app.image(imagenesViz[correr], 527 + x, 133 + y);
+		} else if (rotacion == true) {
+
+			System.out.println(rota);
+			switch (rota) {
+			case 90:
+				app.translate(1110, -450);
+				app.rotate(app.radians(rota));
+				app.image(imagenesViz[correr], 513 + x, 120 + y);
+				break;
+
+			case 180:
+				app.translate(1590, 615);
+				app.rotate(app.radians(rota));
+				app.image(imagenesViz[correr], 513 + x, 120 + y);
+				break;
+
+			case 270:
+				app.translate(-1590, 615);
+				app.rotate(app.radians(rota));
+				app.image(imagenesViz[correr], 513 + x, 120 + y);
+				break;
+
+			case -90:
+				app.translate(50, 50);
+				app.rotate(app.radians(rota));
+				app.image(imagenesViz[correr], 513 + x, 120 + y);
+				break;
+
+			case -180:
+				app.translate(1590, 615);
+				app.rotate(app.radians(rota));
+				app.image(imagenesViz[correr], 513 + x, 120 + y);
+				break;
+
+			case -270:
+				app.translate(-1590, 615);
+				app.rotate(app.radians(rota));
+				app.image(imagenesViz[correr], 513 + x, 120 + y);
+				break;
+			}
+
+		}
+
+		if (full == true) {
+			imagenesViz[correr].resize(1200, 754);
+			app.image(imagenesViz[correr], 0, 0);
 		}
 
 	}
@@ -126,6 +183,63 @@ public class Logica {
 			var = 0;
 		}
 
+	}
+
+	public void zoom() {
+		// Resize
+		if (rsize >= 100) {
+			zoom = false;
+		} else if (rsize <= -180) {
+			zoom = false;
+		}
+
+		if (zoom == true) {
+			if (app.mouseX < 1140 && app.mouseX > 1080 && app.mouseY < 682 && app.mouseY > 619) {
+				rsize += 10;
+				x -= 5;
+				y -= 5;
+
+				System.out.println(rsize);
+			}
+
+			if (app.mouseX < 1052 && app.mouseX > 993 && app.mouseY < 682 && app.mouseY > 619) {
+				rsize -= 10;
+				System.out.println(rsize);
+				x += 5;
+				y += 5;
+			}
+		}
+
+	}
+
+	public void rotar() {
+		if (app.mouseX < 520 && app.mouseX > 455 && app.mouseY < 682 && app.mouseY > 619) {
+			rotacion = true;
+			rota -= 90;
+			if (rota < -270) {
+				rotacion = false;
+				rota = 0;
+			}
+
+		}
+
+		if (app.mouseX < 624 && app.mouseX > 540 && app.mouseY < 682 && app.mouseY > 619) {
+			rotacion = true;
+
+			rota += 90;
+			if (rota > 270) {
+				rotacion = false;
+				rota = 0;
+			}
+
+		}
+	}
+
+	public void fullScreen() {
+		if (app.mouseX < 860 && app.mouseX > 743 && app.mouseY < 685 && app.mouseY > 619) {
+			full = true;
+
+		}
 	}
 
 }

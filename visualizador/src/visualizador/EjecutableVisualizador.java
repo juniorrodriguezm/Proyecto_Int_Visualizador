@@ -21,6 +21,9 @@ public class EjecutableVisualizador extends PApplet {
 		System.out.println("x"+mouseX);
 		System.out.println("y"+mouseY);
 		app.clic();
+		app.zoom();
+		app.rotar();
+		app.fullScreen();
 		
 	}
 }
