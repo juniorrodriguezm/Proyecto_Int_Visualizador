@@ -15,6 +15,12 @@ public class EjecutableVisualizador extends PApplet {
 		background(255);
 		app.pintar();
 		
-
+	}
+	
+	public void mousePressed(){
+		System.out.println("x"+mouseX);
+		System.out.println("y"+mouseY);
+		app.clic();
+		
 	}
 }
